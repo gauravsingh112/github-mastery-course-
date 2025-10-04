@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Mastery Course</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            height: 100%;
+            width: 0%;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .main-content {
+            display: flex;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            width: 320px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-right: 2px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .sidebar h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .chapter-item {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chapter-item:hover {
+            transform: translateX(5px);
+            border-color: #667eea;
+        }
+
+        .chapter-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .chapter-item.completed {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .chapter-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .chapter-info {
+            flex-grow: 1;
+        }
+
+        .chapter-number {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .chapter-title {
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .content-area h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .content-area h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .content-area h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .content-area p {
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .content-area ul, .content-area ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .content-area li {
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .example-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .example-box h4 {
+            color: #1976D2;
+            margin-top: 0;
+        }
+
+        .layman-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .layman-box h4 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .quiz-question h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .quiz-option {
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            border-color: #667eea;
+            background: #e3f2fd;
+        }
+
+        .quiz-option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .quiz-option.wrong {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            margin: 20px 0;
+        }
+
+        .score-display div {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 GitHub Mastery Course</h1>
+            <p>Complete Interactive Learning Platform for Full Stack Developers</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0% Complete</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <h2>📚 Course Chapters</h2>
+                <div id="chapterList"></div>
+            </div>
+
+            <div class="content-area" id="contentArea">
+                <h2>Welcome to GitHub Mastery! 👋</h2>
+                <p>Select a chapter from the sidebar to begin your journey. Check off chapters as you complete them!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chapters = [
+            {
+                id: 1,
+                title: "Git & GitHub Basics",
+                content: `
+                    <h2>Chapter 1: Git & GitHub Basics</h2>
+                    
+                    <h3>What is Git?</h3>
+                    <div class="layman-box">
+                        <h4>💡 Simple Explanation</h4>
+                        <p>Think of Git as a "time machine" for your code. Just like you can undo changes in Microsoft Word, Git lets you go back to any previous version of your project.</p>
+                    </div>
+
+                    <p><strong>Key Concepts:</strong></p>
+                    <ul>
+                        <li><strong>Git</strong> = Version control system (runs on your computer)</li>
+                        <li><strong>GitHub</strong> = Online platform to store Git repositories (like Google Drive for code)</li>
+                    </ul>
+
+                    <h3>What is GitHub?</h3>
+                    <p>If Git is like keeping a diary of your code changes on your computer, GitHub is like uploading that diary to the cloud so others can read it, contribute to it, and you can access it from anywhere.</p>
+
+                    <h3>Important Terms:</h3>
+                    <ol>
+                        <li><strong>Repository (Repo)</strong> - A folder containing your project and history</li>
+                        <li><strong>Commit</strong> - A snapshot of your code (like saving a game)</li>
+                        <li><strong>Push</strong> - Upload commits to GitHub</li>
+                        <li><strong>Pull</strong> - Download changes from GitHub</li>
+                        <li><strong>Clone</strong> - Copy a repository to your computer</li>
+                        <li><strong>Branch</strong> - Work on features separately</li>
+                        <li><strong>Merge</strong> - Combine changes from branches</li>
+                        <li><strong>Pull Request</strong> - Ask to merge your changes</li>
+                    </ol>
+
+                    <div class="example-box">
+                        <h4>📖 Book Writing Example</h4>
+                        <ul>
+                            <li><strong>Repository</strong> = Your book folder</li>
+                            <li><strong>Commit</strong> = Saving a chapter</li>
+                            <li><strong>Push</strong> = Uploading to cloud</li>
+                            <li><strong>Branch</strong> = Writing alternate ending</li>
+                            <li><strong>Merge</strong> = Choosing final version</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                id: 2,
+                title: "Setting Up Environment",
+                content: `
+                    <h2>Chapter 2: Setting Up Your Environment</h2>
+                    
+                    <h3>Step 1: Install Git</h3>
+                    
+                    <h4>Windows:</h4>
+                    <div class="code-block">Download from: https://git-scm.com/download/win
+Run installer with default settings</div>
+
+                    <h4>Mac:</h4>
+                    <div class="code-block">brew install git</div>
+
+                    <h4>Linux:</h4>
+                    <div class="code-block">sudo apt-get update
+sudo apt-get install git</div>
+
+                    <h4>Verify Installation:</h4>
+                    <div class="code-block">git --version</div>
+
+                    <h3>Step 2: Configure Git</h3>
+                    <div class="code-block">git config --global user.name "Your Name"
+git config --global user.email "your@email.com"</div>
+
+                    <div class="example-box">
+                        <h4>Example Configuration:</h4>
+                        <div class="code-block">git config --global user.name "John Doe"
+git config --global user.email "john@example.com"</div>
+                    </div>
+
+                    <h3>Step 3: Create GitHub Account</h3>
+                    <ol>
+                        <li>Go to github.com</li>
+                        <li>Sign up with your email</li>
+                        <li>Verify email address</li>
+                    </ol>
+
+                    <h3>Step 4: Connect VS Code</h3>
+                    <ol>
+                        <li>Open VS Code</li>
+                        <li>Go to Extensions (Ctrl+Shift+X)</li>
+                        <li>Search "GitHub Pull Requests"</li>
+                        <li>Install extension</li>
+                        <li>Click account icon (bottom left)</li>
+                        <li>Sign in to GitHub</li>
+                    </ol>
+                `
+            },
+            {
+                id: 3,
+                title: "First Repository",
+                content: `
+                    <h2>Chapter 3: Your First Repository</h2>
+                    
+                    <h3>Method 1: Create on GitHub First (Easier)</h3>
+                    
+                    <ol>
+                        <li>Go to GitHub.com</li>
+                        <li>Click "+" then "New repository"</li>
+                        <li>Name it "my-first-project"</li>
+                        <li>Check "Add README file"</li>
+                        <li>Click "Create repository"</li>
+                    </ol>
+
+                    <h4>Clone to Computer:</h4>
+                    <div class="code-block">cd Desktop
+git clone https://github.com/USERNAME/my-first-project.git
+cd my-first-project</div>
+
+                    <h3>Method 2: Create Locally</h3>
+                    <div class="code-block">mkdir my-project
+cd my-project
+git init
+echo "# My Project" >> README.md
+git add README.md
+git commit -m "Initial commit"</div>
+
+                    <h4>Connect to GitHub:</h4>
+                    <div class="code-block">git remote add origin https://github.com/USERNAME/my-project.git
+git branch -M main
+git push -u origin main</div>
+
+                    <div class="tip-box">
+                        <h4>Which Method?</h4>
+                        <p><strong>Method 1</strong> is like renting a furnished apartment. <strong>Method 2</strong> is like building your own house first.</p>
+                    </div>
+                `
+            },
+            {
+                id: 4,
+                title: "Pushing Code",
+                content: `
+                    <h2>Chapter 4: Pushing Code to GitHub</h2>
+                    
+                    <h3>The Three Stages</h3>
+                    <ol>
+                        <li><strong>Working Directory</strong> - Your files where you code</li>
+                        <li><strong>Staging Area</strong> - Files ready to commit (shopping cart)</li>
+                        <li><strong>Repository</strong> - Committed files (purchased items)</li>
+                    </ol>
+
+                    <h3>Basic Commands</h3>
+                    
+                    <h4>Check Status:</h4>
+                    <div class="code-block">git status</div>
+
+                    <h4>Stage Files:</h4>
+                    <div class="code-block">git add filename.js       # Add one file
+git add .                 # Add all files
+git add *.css             # Add all CSS files</div>
+
+                    <h4>Commit:</h4>
+                    <div class="code-block">git commit -m "Your message here"</div>
+
+                    <h4>Push:</h4>
+                    <div class="code-block">git push origin main
+# or simply
+git push</div>
+
+                    <div class="example-box">
+                        <h4>Complete Example:</h4>
+                        <div class="code-block">mkdir my-website
+cd my-website
+git init
+
+echo "Hello World" > index.html
+echo "body { color: blue; }" > style.css
+
+git add .
+git commit -m "Add initial files"
+git remote add origin https://github.com/USER/my-website.git
+git push -u origin main</div>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4>Understanding -u flag</h4>
+                        <p>Use <code>-u</code> only first time. After that, just use <code>git push</code></p>
+                    </div>
+                `
+            },
+            {
+                id: 5,
+                title: "Making Changes",
+                content: `
+                    <h2>Chapter 5: Making Changes & Updates</h2>
+                    
+                    <h3>View History</h3>
+                    <div class="code-block">git log               # Full history
+git log --oneline     # Short format
+git log -5            # Last 5 commits</div>
+
+                    <h3>Undo Changes</h3>
+                    
+                    <h4>Before Staging:</h4>
+                    <div class="code-block">git checkout -- filename.js    # Undo one file
+git checkout -- .                # Undo all</div>
+
+                    <h4>Unstage Files:</h4>
+                    <div class="code-block">git reset filename.js    # Unstage one
+git reset                # Unstage all</div>
+
+                    <h4>Undo Last Commit (Keep Changes):</h4>
+                    <div class="code-block">git reset --soft HEAD~1</div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ Dangerous Command</h4>
+                        <div class="code-block">git reset --hard HEAD~1    # Deletes changes!</div>
+                    </div>
+
+                    <h3>Pull Changes</h3>
+                    <div class="code-block">git pull    # Download latest from GitHub</div>
+
+                    <div class="example-box">
+                        <h4>Daily Workflow:</h4>
+                        <div class="code-block">git pull              # Morning: Get updates
+# Work on files...
+git add .
+git commit -m "Add feature"
+git push              # Evening: Upload work</div>
+                    </div>
+
+                    <h3>VS Code Method</h3>
+                    <ol>
+                        <li>Press Ctrl+Shift+G</li>
+                        <li>Click "+" to stage files</li>
+                        <li>Type commit message</li>
+                        <li>Press Ctrl+Enter to commit</li>
+                        <li>Click sync button to push</li>
+                    </ol>
+                `
+            },
+            {
+                id: 6,
+                title: "Branches",
+                content: `
+                    <h2>Chapter 6: Branches Explained</h2>
+                    
+                    <h3>What is a Branch?</h3>
+                    <div class="layman-box">
+                        <h4>💡 Story Example</h4>
+                        <p>Writing a story? Want to try different ending? Create a copy, write new ending, decide later which to keep. That's a branch!</p>
+                    </div>
+
+                    <h3>Why Use Branches?</h3>
+                    <ul>
+                        <li>Work on features without breaking main code</li>
+                        <li>Multiple people work simultaneously</li>
+                        <li>Test before merging to main</li>
+                        <li>Keep production code stable</li>
+                    </ul>
+
+                    <h3>Branch Commands</h3>
+                    
+                    <h4>View Branches:</h4>
+                    <div class="code-block">git branch</div>
+
+                    <h4>Create Branch:</h4>
+                    <div class="code-block">git branch feature-login</div>
+
+                    <h4>Switch Branch:</h4>
+                    <div class="code-block">git checkout feature-login</div>
+
+                    <h4>Create and Switch:</h4>
+                    <div class="code-block">git checkout -b feature-login</div>
+
+                    <div class="example-box">
+                        <h4>Complete Example:</h4>
+                        <div class="code-block">git checkout -b feature-login
+# Work on login feature
+echo "Login Page" > login.html
+git add .
+git commit -m "Add login page"
+git push origin feature-login
+git checkout main    # Back to main</div>
+                    </div>
+
+                    <h4>Delete Branch:</h4>
+                    <div class="code-block">git branch -d feature-login      # Local
+git push origin --delete feature-login   # Remote</div>
+                `
+            },
+            {
+                id: 7,
+                title: "Pull Requests",
+                content: `
+                    <h2>Chapter 7: Pull Requests</h2>
+                    
+                    <h3>What is a Pull Request?</h3>
+                    <div class="layman-box">
+                        <h4>💡 Book Editor Example</h4>
+                        <p>You wrote a chapter. Before adding to book, editor reviews it. Can suggest changes, approve, or reject. That's a Pull Request!</p>
+                    </div>
+
+                    <h3>Why Pull Requests?</h3>
+                    <ul>
+                        <li><strong>Code Review</strong> - Team reviews your code</li>
+                        <li><strong>Discussion</strong> - Talk about changes</li>
+                        <li><strong>Quality</strong> - Catch bugs early</li>
+                        <li><strong>History</strong> - Document why changes made</li>
+                    </ul>
+
+                    <h3>Creating a PR</h3>
+                    
+                    <h4>Step 1: Push Branch</h4>
+                    <div class="code-block">git checkout -b feature-dark-mode
+# Make changes
+git add .
+git commit -m "Add dark mode"
+git push origin feature-dark-mode</div>
+
+                    <h4>Step 2: On GitHub</h4>
+                    <ol>
+                        <li>Go to repository on GitHub</li>
+                        <li>See yellow banner "Recent pushes"</li>
+                        <li>Click "Compare & pull request"</li>
+                        <li>Add title and description</li>
+                        <li>Select reviewers</li>
+                        <li>Click "Create pull request"</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <h4>Good PR Titles:</h4>
+                        <ul>
+                            <li>✅ "Add user authentication"</li>
+                            <li>✅ "Fix mobile navbar bug"</li>
+                            <li>❌ "Updates" (too vague)</li>
+                            <li>❌ "Fixed stuff" (not clear)</li>
+                        </ul>
+                    </div>
+                `
+            },
+            {
+                id: 8,
+                title: "Merging & Conflicts",
+                content: `
+                    <h2>Chapter 8: Merge & Conflicts</h2>
+                    
+                    <h3>Simple Merge</h3>
+                    <div class="code-block">git checkout main
+git merge feature-login
+git push</div>
+
+                    <h3>What is a Conflict?</h3>
+                    <div class="layman-box">
+                        <h4>💡 Simple Explanation</h4>
+                        <p>You and friend both edited same sentence differently. Now must decide which version to keep or combine both.</p>
+                    </div>
+
+                    <p><strong>Happens when:</strong> Two branches modify same line in same file</p>
+
+                    <h3>Conflict Looks Like:</h3>
+                    <div class="code-block"><<<<<<< HEAD
+Your changes
+=======
+Their changes
+>>>>>>> feature-branch</div>
+
+                    <h3>Resolving Conflicts</h3>
+                    <ol>
+                        <li>Open the file</li>
+                        <li>Choose which version to keep</li>
+                        <li>Remove conflict markers</li>
+                        <li>Save file</li>
+                    </ol>
+
+                    <div class="code-block">git add filename.js
+git commit -m "Resolve conflict"
+git push</div>
+
+                    <h3>VS Code Method</h3>
+                    <p>VS Code shows buttons:</p>
+                    <ul>
+                        <li>"Accept Current Change"</li>
+                        <li>"Accept Incoming Change"</li>
+                        <li>"Accept Both Changes"</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4>Too Messy?</h4>
+                        <div class="code-block">git merge --abort    # Start over</div>
+                    </div>
+                `
+            },
+            {
+                id: 9,
+                title: "Collaboration",
+                content: `
+                    <h2>Chapter 9: Collaboration Workflow</h2>
+                    
+                    <h3>Clone vs Fork</h3>
+                    
+                    <h4>Clone:</h4>
+                    <ul>
+                        <li>Copy to your computer</li>
+                        <li>You can push directly</li>
+                        <li>For your own repos</li>
+                    </ul>
+                    <div class="code-block">git clone https://github.com/you/repo.git</div>
+
+                    <h4>Fork:</h4>
+                    <ul>
+                        <li>Copy to your GitHub account</li>
+                        <li>Can't affect original</li>
+                        <li>For contributing to others</li>
+                    </ul>
+
+                    <h3>Contributing to Open Source</h3>
+                    
+                    <ol>
+                        <li><strong>Fork</strong> the repository on GitHub</li>
+                        <li><strong>Clone</strong> your fork</li>
+                        <li><strong>Create</strong> feature branch</li>
+                        <li><strong>Make</strong> changes</li>
+                        <li><strong>Push</strong> to your fork</li>
+                        <li><strong>Create</strong> Pull Request</li>
+                    </ol>
+
+                    <div class="example-box">
+                        <h4>Complete Workflow:</h4>
+                        <div class="code-block">git clone https://github.com/YOU/repo.git
+cd repo
+git checkout -b fix-typo
+# Make changes
+git add .
+git commit -m "Fix typo"
+git push origin fix-typo
+# Create PR on GitHub</div>
+                    </div>
+
+                    <h3>Team Best Practices</h3>
+                    <ul>
+                        <li>Always pull before starting work</li>
+                        <li>Use feature branches</li>
+                        <li>Write clear commit messages</li>
+                        <li>Keep PRs small (max 400 lines)</li>
+                        <li>Communicate with team</li>
+                    </ul>
+                `
+            },
+            {
+                id: 10,
+                title: "Advanced Features",
+                content: `
+                    <h2>Chapter 10: Advanced Features</h2>
+                    
+                    <h3>Git Stash</h3>
+                    <p>Temporarily save changes without committing</p>
+                    
+                    <div class="code-block">git stash              # Save changes
+git stash list         # View stashes
+git stash pop          # Apply and remove
+git stash apply        # Apply but keep</div>
+
+                    <div class="layman-box">
+                        <h4>💡 Drawer Example</h4>
+                        <p>Writing chapter, need to fix typo in previous one? Save current work in drawer (stash), fix typo, then continue writing.</p>
+                    </div>
+
+                    <h3>Git Tags (Versions)</h3>
+                    <div class="code-block">git tag -a v1.0.0 -m "First release"
+git push origin v1.0.0
+git push --tags</div>
+
+                    <h4>Version Numbers:</h4>
+                    <div class="code-block">v1.2.3
+  │ │ └─ PATCH (bug fixes)
+  │ └─── MINOR (new features)
+  └───── MAJOR (breaking changes)</div>
+
+                    <h3>.gitignore File</h3>
+                    <p>Tell Git which files to ignore</p>
+                    <div class="code-block"># .gitignore file
+node_modules/
+.env
+*.log
+.DS_Store
+dist/</div>
+
+                    <div class="tip-box">
+                        <h4>Why Important?</h4>
+                        <ul>
+                            <li>Don't upload passwords</li>
+                            <li>Don't upload dependencies</li>
+                            <li>Keep repo clean and small</li>
+                        </ul>
+                    </div>
+
+                    <h3>GitHub Pages</h3>
+                    <p>Free website hosting!</p>
+                    <ol>
+                        <li>Go to Settings → Pages</li>
+                        <li>Select branch: main</li>
+                        <li>Click Save</li>
+                        <li>Site live at: username.github.io/repo</li>
+                    </ol>
+
+                    <h3>GitHub CLI</h3>
+                    <div class="code-block">gh repo create my-repo --public
+gh pr create --title "Add feature"
+gh pr list
+gh pr merge 5</div>
+                `
+            },
+            {
+                id: 11,
+                title: "Final Quiz",
+                content: `
+                    <h2>🎓 Final Assessment</h2>
+                    <p>Test your knowledge with this quiz!</p>
+                    <div id="quizContainer"></div>
+                `
+            }
+        ];
+
+        const quizQuestions = [
+            {
+                question: "What is Git?",
+                options: [
+                    "A) A website for hosting code",
+                    "B) A version control system",
+                    "C) A programming language",
+                    "D) A code editor"
+                ],
+                correct: 1
+            },
+            {
+                question: "What does 'git init' do?",
+                options: [
+                    "A) Installs Git",
+                    "B) Creates a new repository",
+                    "C) Pushes to GitHub",
+                    "D) Deletes files"
+                ],
+                correct: 1
+            },
+            {
+                question: "Correct order to upload code?",
+                options: [
+                    "A) commit → add → push",
+                    "B) push → add → commit",
+                    "C) add → commit → push",
+                    "D) add → push → commit"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is a branch?",
+                options: [
+                    "A) A commit message",
+                    "B) A separate line of development",
+                    "C) A merge conflict",
+                    "D) A repository URL"
+                ],
+                correct: 1
+            },
+            {
+                question: "Create and switch to new branch?",
+                options: [
+                    "A) git branch new-branch",
+                    "B) git checkout new-branch",
+                    "C) git checkout -b new-branch",
+                    "D) git switch new-branch"
+                ],
+                correct: 2
+            },
+            {
+                question: "What is a Pull Request?",
+                options: [
+                    "A) Downloading code",
+                    "B) Request to merge with review",
+                    "C) Creating a branch",
+                    "D) Deleting a branch"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is a merge conflict?",
+                options: [
+                    "A) A successful merge",
+                    "B) Same lines modified in two branches",
+                    "C) Deleting a file",
+                    "D) Creating a branch"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is forking?",
+                options: [
+                    "A) Deleting a repository",
+                    "B) Copying someone's repo to your account",
+                    "C) Merging branches",
+                    "D) Pushing code"
+                ],
+                correct: 1
+            },
+            {
+                question: "What should NOT be on GitHub?",
+                options: [
+                    "A) Source code",
+                    "B) Documentation",
+                    "C) Passwords and API keys",
+                    "D) README files"
+                ],
+                correct: 2
+            },
+            {
+                question: "What does 'git stash' do?",
+                options: [
+                    "A) Deletes changes",
+                    "B) Temporarily saves changes",
+                    "C) Creates branches",
+                    "D) Pushes to GitHub"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentChapter = 0;
+        let completedChapters = [];
+        let quizAnswers = [];
+        let quizSubmitted = false;
+
+        function updateProgress() {
+            const progress = (completedChapters.length / chapters.length) * 100;
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = progress + '%';
+            progressFill.textContent = Math.round(progress) + '% Complete';
+        }
+
+        function renderChapterList() {
+            const chapterList = document.getElementById('chapterList');
+            chapterList.innerHTML = '';
+
+            chapters.forEach((chapter, index) => {
+                const isCompleted = completedChapters.includes(chapter.id);
+                const isActive = currentChapter === index;
+
+                const chapterItem = document.createElement('div');
+                chapterItem.className = 'chapter-item';
+                if (isActive) chapterItem.classList.add('active');
+                if (isCompleted) chapterItem.classList.add('completed');
+
+                chapterItem.innerHTML = `
+                    <input type="checkbox" class="chapter-checkbox" ${isCompleted ? 'checked' : ''} data-id="${chapter.id}">
+                    <div class="chapter-info">
+                        <div class="chapter-number">Chapter ${chapter.id}</div>
+                        <div class="chapter-title">${chapter.title}</div>
+                    </div>
+                `;
+
+                chapterItem.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('chapter-checkbox')) {
+                        loadChapter(index);
+                    }
+                });
+
+                chapterList.appendChild(chapterItem);
+            });
+
+            document.querySelectorAll('.chapter-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const chapterId = parseInt(e.target.dataset.id);
+                    if (e.target.checked) {
+                        if (!completedChapters.includes(chapterId)) {
+                            completedChapters.push(chapterId);
+                        }
+                    } else {
+                        completedChapters = completedChapters.filter(id => id !== chapterId);
+                    }
+                    updateProgress();
+                    renderChapterList();
+                });
+            });
+        }
+
+        function loadChapter(index) {
+            currentChapter = index;
+            const chapter = chapters[index];
+            const contentArea = document.getElementById('contentArea');
+
+            if (chapter.id === 11) {
+                contentArea.innerHTML = chapter.content;
+                renderQuiz();
+            } else {
+                contentArea.innerHTML = chapter.content + `
+                    <div class="nav-buttons">
+                        <button class="btn btn-secondary" onclick="previousChapter()" ${index === 0 ? 'disabled' : ''}>
+                            ← Previous
+                        </button>
+                        <button class="btn btn-primary" onclick="nextChapter()" ${index === chapters.length - 1 ? 'disabled' : ''}>
+                            Next →
+                        </button>
+                    </div>
+                `;
+            }
+
+            renderChapterList();
+            contentArea.scrollTop = 0;
+        }
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById('quizContainer');
+            let quizHTML = '';
+
+            quizQuestions.forEach((q, index) => {
+                quizHTML += `
+                    <div class="quiz-question">
+                        <h4>Question ${index + 1}: ${q.question}</h4>
+                        ${q.options.map((option, optIndex) => `
+                            <div class="quiz-option" data-question="${index}" data-answer="${optIndex}">
+                                ${option}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+
+            quizHTML += `
+                <button class="btn btn-primary" onclick="submitQuiz()" style="width: 100%; margin-top: 20px;">
+                    Submit Quiz
+                </button>
+                <div id="quizResult"></div>
+            `;
+
+            quizContainer.innerHTML = quizHTML;
+
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    if (quizSubmitted) return;
+                    
+                    const questionIndex = this.dataset.question;
+                    const answerIndex = this.dataset.answer;
+                    
+                    document.querySelectorAll(`[data-question="${questionIndex}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    this.classList.add('selected');
+                    quizAnswers[questionIndex] = parseInt(answerIndex);
+                });
+            });
+        }
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+            quizSubmitted = true;
+
+            let correct = 0;
+            quizQuestions.forEach((q, index) => {
+                const options = document.querySelectorAll(`[data-question="${index}"]`);
+                options.forEach((option, optIndex) => {
+                    option.style.pointerEvents = 'none';
+                    if (optIndex === q.correct) {
+                        option.classList.add('correct');
+                    }
+                    if (quizAnswers[index] === optIndex && optIndex !== q.correct) {
+                        option.classList.add('wrong');
+                    }
+                });
+                
+                if (quizAnswers[index] === q.correct) {
+                    correct++;
+                }
+            });
+
+            const percentage = (correct / quizQuestions.length) * 100;
+            let grade = '';
+            let emoji = '';
+
+            if (percentage >= 90) {
+                grade = 'Expert Level';
+                emoji = '🏆';
+            } else if (percentage >= 70) {
+                grade = 'Advanced';
+                emoji = '⭐';
+            } else if (percentage >= 50) {
+                grade = 'Intermediate';
+                emoji = '📚';
+            } else {
+                grade = 'Beginner';
+                emoji = '🌱';
+            }
+
+            document.getElementById('quizResult').innerHTML = `
+                <div class="score-display">
+                    <div style="font-size: 3em;">${emoji}</div>
+                    <div>Your Score: ${correct} / ${quizQuestions.length}</div>
+                    <div>${Math.round(percentage)}%</div>
+                    <div>Grade: ${grade}</div>
+                    <div style="font-size: 0.9em; margin-top: 15px;">
+                        ${percentage >= 70 ? 'Excellent work! You\'re ready for GitHub!' : 'Review the course and try again!'}
+                    </div>
+                </div>
+            `;
+
+            if (!completedChapters.includes(11)) {
+                completedChapters.push(11);
+                updateProgress();
+                renderChapterList();
+            }
+        }
+
+        function nextChapter() {
+            if (currentChapter < chapters.length - 1) {
+                loadChapter(currentChapter + 1);
+            }
+        }
+
+        function previousChapter() {
+            if (currentChapter > 0) {
+                loadChapter(currentChapter - 1);
+            }
+        }
+
+        // Initialize
+        renderChapterList();
+        loadChapter(0);
+        updateProgress();
+    </script>
+</body>
+</html>
