@@ -90,7 +90,7 @@ This is a **comprehensive, interactive learning platform** designed specifically
 
 Just visit the live demo and start learning immediately:
 
-👉 **[CLICK HERE TO START LEARNING](https://gauravsingh112.github.io/github-mastery-course/)** 👈
+👉 **[CLICK HERE TO START LEARNING]([https://gauravsingh112.github.io/github-mastery-course-/])** 👈
 
 ### 💻 **Option 2: Run Locally**
 
