@@ -461,7 +461,7 @@ If this project helped you, please consider:
 ⭐ **Starring** this repository  
 🔀 **Forking** and sharing with others  
 💬 **Sharing** on social media  
-☕ **[Buying me a coffee](https://www.buymeacoffee.com/gauravsingh112)** (optional)
+☕ **[Buying me a coffee](https://buymeacoffee.com/gauravsr19a)** (optional)
 
 ---
 
